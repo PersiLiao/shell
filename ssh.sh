@@ -10,6 +10,7 @@ export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 
 workDirectory=$(dirname "$0")
 pushd ${workDirectory} > /dev/null
+workDirectory=$(pwd)
 
 . ./include/color.sh
 . ./include/constant.sh
