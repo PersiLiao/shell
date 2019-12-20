@@ -1,56 +1,75 @@
 #!/bin/bash
 
 #Author: PersiLiao(xiangchu.liao@gmail.com)
-#Description: SSH key generation script automatically
+#Description: SSH public key generation script automatically
 #Version: 1.0
 #ssh-keygen -t rsa
 #yum install -y openssh-server openssh-clients
 
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
-clear
+
+workDirectory=$(dirname "$0")
+pushd ${workDirectory} > /dev/null
+
+. ./include/color.sh
+. ./include/constant.sh
+
+isRootLogin=0
+if [ $(id -u) == '0' ]; then
+    isRootLogin=1
+fi
+
+if [ `uname` == "Darwin" ]; then
+    chattrAddCommand="chflags uchg"
+    chattrDelCommand="chflags nouchg"
+else
+    if [ $isRootLogin == 0 ]; then
+        chattrAddCommand="sudo chattr +i"
+        chattrDelCommand="sudo chattr -i"
+    else
+        chattrAddCommand="chattr +i"
+        chattrDelCommand="chattr -i"
+    fi
+fi
+
 printf "
 #######################################################################
-#       SSH for CentOS/RedHat 6+ Debian 7+ and Ubuntu 12+ macOs       #
-#       For more information please visit https://www.sixsir.com      #
+#       SSH public key generation script automatically                #
+#       Supported: CentOS/RedHat 6+ Debian 7+ Ubuntu 12+ and macOs    #
+#       For more information please visit                             #
+#           https://github.com/PersiLiao/shell                        #
 #######################################################################
-
-"
-
-cd ~
+${SLF}"
 test -d ~/.ssh || mkdir ~/.ssh
-chmod 0700 .ssh
+chmod 0700 ~/.ssh
 test -f ~/.ssh/authorized_keys || touch ~/.ssh/authorized_keys
+`$chattrDelCommand ~/.ssh/authorized_keys`
 chmod 0600 ~/.ssh/authorized_keys
-publicKeyPath="$(dirname "$0")/public.key"
+publicKeyPath="${workDirectory}/public.key"
 if [ ! -f $publicKeyPath ]; then
-    echo -e "\033[31mPlease check that the public.key file exists in the directory !\033[0m"
+    echo -e "${CFAILURE}Please check that the public.key file exists in the directory !${CEND}${SLF}"
     exit 1
 fi
 cat $publicKeyPath > ~/.ssh/authorized_keys
 writePublicKeyStatus=$?
 if [ $writePublicKeyStatus != 0 ]; then
-    echo -e "\033[31mSSH public key auto write authorized_keys unsuccessful !\033[0m"
+    echo -e "${CFAILURE}SSH public key auto write authorized_keys unsuccessful !${CEND}${SLF}"
     exit 1
+else
+    echo -e "${CSUCCESS}SSH public key auto write authorized_keys successful. ${CEND}${SLF}"
 fi
-
-read -e -p "Set a block to modify files ? [y/n] " sshChattrSet
+read -e -p "Whether i need to set up ~/.ssh/authorized_keys not allowed to be modified ? [y/n] :" sshChattrSet
 if [ "${sshChattrSet}" == 'y' ]; then
-    if [ `uname` == "Darwin" ]; then
-        chattrCommand="chflags uchg"
-    else
-        chattrCommand="chattr +i"
-    fi
     if [ $(id -u) == '0' ]; then
-        `$chattrCommand ~/.ssh/authorized_keys`
+        `$chattrAddCommand ~/.ssh/authorized_keys`
     else
-        `sudo $chattrCommand ~/.ssh/authorized_keys`
+        `sudo $chattrAddCommand ~/.ssh/authorized_keys`
     fi
     if [ $? != 0 ]; then
-        echo -e "\033[31mAuthorized_keys permission setting unsuccessful !\033[0m"
+        echo -e "${CFAILURE}mAuthorized_keys permission setting unsuccessful !${CEND}${SLF}"
         exit 1
     fi
 fi
-echo -e "\033[32m SSH public key auto write authorized_keys successful. \033[0m"
 
 exit 0
 
