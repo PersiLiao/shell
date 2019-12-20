@@ -66,8 +66,10 @@ if [ "${sshChattrSet}" == 'y' ]; then
     else
         `sudo $chattrAddCommand ~/.ssh/authorized_keys`
     fi
-    if [ $? != 0 ]; then
-        echo -e "${CFAILURE}mAuthorized_keys permission setting unsuccessful !${CEND}${SLF}"
+    if [ $? == 0 ]; then
+        echo -e "${SLF}${CSUCCESS}The setting of the .ssh/authorized_keys does not allow the modification of the successful. ${CEND}${SLF}"
+    else
+        echo -e "${SLF}${CFAILURE}The setting of the .ssh/authorized_keys does not allow the modification of the  unsuccessful !${CEND}${SLF}"
         exit 1
     fi
 fi
