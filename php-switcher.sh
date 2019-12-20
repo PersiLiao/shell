@@ -35,7 +35,7 @@ function ReconstructionLink()
     ln -s $3 "/usr/local/bin/php-config"
     ln -s $4 "/usr/local/bin/php-fpm"
     ln -s $5 "/usr/local/bin/phar"
-    echo "PHP version switch is successful, the current version is "
+    echo "\033[32mPHP version switch is successful.\033[0m"
     echo `/usr/local/bin/php -v`"\\n"
     exit 0
 }
@@ -43,13 +43,13 @@ function ReconstructionLink()
 PHP_VERSION=$1
 
 if [ ! ${PHP_VERSION} ]; then
-    echo "Please enter the PHP version you need to switch .\\n"
+    echo "\033[31mPlease enter the PHP version you need to switch !\033[0m\\n"
     echo "Usage:"
-    echo "  php-version.sh version_number, example: php-version.sh dev ."
+    echo "  php-version.sh version_number, example: php-version.sh dev"
     echo "  list of supported php versions: "
     for PHP_PATH in "${!PHP_VERSION_PATH[@]}"; do
         if [ `expr $PHP_PATH % 2` = 0 ]; then
-            echo "    "${PHP_VERSION_PATH[$PHP_PATH]}
+            echo "    \033[32m"${PHP_VERSION_PATH[$PHP_PATH]}"\033[0m"
         fi
     done
     exit 1
