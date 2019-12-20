@@ -23,13 +23,13 @@ test -f ~/.ssh/authorized_keys || touch ~/.ssh/authorized_keys
 chmod 0600 ~/.ssh/authorized_keys
 publicKeyPath="$(dirname "$0")/public.key"
 if [ ! -f $publicKeyPath ]; then
-    echo -e "\033[31mPlease check that the public.key file exists in the directory !"
+    echo -e "\033[31mPlease check that the public.key file exists in the directory !\033[0m"
     exit 1
 fi
 cat $publicKeyPath > ~/.ssh/authorized_keys
 writePublicKeyStatus=$?
 if [ $writePublicKeyStatus != 0 ]; then
-    echo -e "\033[31mSSH public key auto write authorized_keys unsuccessful !"
+    echo -e "\033[31mSSH public key auto write authorized_keys unsuccessful !\033[0m"
     exit 1
 fi
 
@@ -46,7 +46,7 @@ if [ "${sshChattrSet}" == 'y' ]; then
         `sudo $chattrCommand ~/.ssh/authorized_keys`
     fi
 fi
-echo -e "\033[32m SSH public key auto write authorized_keys successful"
+echo -e "\033[32m SSH public key auto write authorized_keys successful. \033[0m"
 
 exit 0
 
