@@ -45,6 +45,10 @@ if [ "${sshChattrSet}" == 'y' ]; then
     else
         `sudo $chattrCommand ~/.ssh/authorized_keys`
     fi
+    if [ $? != 0 ]; then
+        echo -e "\033[31mAuthorized_keys permission setting unsuccessful !\033[0m"
+        exit 1
+    fi
 fi
 echo -e "\033[32m SSH public key auto write authorized_keys successful. \033[0m"
 
