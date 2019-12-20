@@ -10,24 +10,45 @@ export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 clear
 printf "
 #######################################################################
-#       SSH-KEY for CentOS/RedHat 6+ Debian 7+ and Ubuntu 12+         #
+#       SSH for CentOS/RedHat 6+ Debian 7+ and Ubuntu 12+ macOs       #
 #       For more information please visit https://www.sixsir.com      #
 #######################################################################
+
 "
 
 cd ~
 test -d ~/.ssh || mkdir ~/.ssh
 chmod 0700 .ssh
-cat > ~/.ssh/authorized_keys <<EOF
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDG6wzFV8qaUIBPewXNjjf2iFLOeWjPKdcKUn4RlmgJ+zKpD3lJVxti4fk+OhL1PMb111u/yc1Idz8ZVnrSMXywrO8t02HdI/c3zlggTjrcfT4s4xgMHAr3p9zpL7yJc/reykLqhKqsGUX/H6SB+VdmoA8WkTreX28H4Aj4BysAeIxxV160RseTJkIx6tWbE18xoG4Lz/qEQikuBRjAK6bBxid12MjoN6xWSjB6gDdkrDwGQuletXuE2EYLY//jHJ7uafjFrKBW4jWr/Ne4QbyvMWBUF/vbTNHPqL9BSSaAVgkPtrazhH15nOaEM28+EyyDzMaECVFE7/oTah86VFY/ persi@Persi.local
-EOF
-
+test -f ~/.ssh/authorized_keys || touch ~/.ssh/authorized_keys
 chmod 0600 ~/.ssh/authorized_keys
-chattr +i ~/.ssh/authorized_keys
+publicKeyPath="$(dirname "$0")/public.key"
+if [ ! -f $publicKeyPath ]; then
+    echo -e "\033[31mPlease check that the public.key file exists in the directory !"
+    exit 1
+fi
+cat $publicKeyPath > ~/.ssh/authorized_keys
+writePublicKeyStatus=$?
+if [ $writePublicKeyStatus != 0 ]; then
+    echo -e "\033[31mSSH public key auto write authorized_keys unsuccessful !"
+    exit 1
+fi
 
-printf "
-SSH public key auto write authorized_keys successful
-"
+read -e -p "Set a block to modify files ? [y/n] " sshChattrSet
+if [ "${sshChattrSet}" == 'y' ]; then
+    if [ `uname` == "Darwin" ]; then
+        chattrCommand="chflags uchg"
+    else
+        chattrCommand="chattr +i"
+    fi
+    if [ $(id -u) == '0' ]; then
+        `$chattrCommand ~/.ssh/authorized_keys`
+    else
+        `sudo $chattrCommand ~/.ssh/authorized_keys`
+    fi
+fi
+echo -e "\033[32m SSH public key auto write authorized_keys successful"
+
+exit 0
 
 
 
