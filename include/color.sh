@@ -11,6 +11,7 @@ for cmd in echo /bin/echo; do
     break
   fi
 done
+
 CBE=$($echo -e "\033[") # Begin echo
 CEND="${CBE}0m" # End
 CDGREEN="${CBE}32m"
