@@ -38,7 +38,7 @@ printf "
 #       SSH public key generation script automatically                #
 #       Supported: CentOS/RedHat 6+ Debian 7+ Ubuntu 12+ and macOs    #
 #       For more information please visit                             #
-#           https://github.com/PersiLiao/shell                        #
+#           https://github.com/persiliao/vivian                       #
 #######################################################################
 ${SLF}"
 test -d ~/.ssh || mkdir ~/.ssh

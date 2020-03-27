@@ -19,7 +19,7 @@ printf "
 #       Make you more friendly to create user accounts                #
 #       Supported: CentOS/RedHat 6+ Debian 7+ and Ubuntu 12+          #
 #       For more information please visit                             #
-#           https://github.com/PersiLiao/shell                        #
+#           https://github.com/persiliao/vivian                       #
 #######################################################################
 ${SLF}"
 
