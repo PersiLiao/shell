@@ -35,9 +35,9 @@ fi
 
 printf "
 #######################################################################
-#       SSH public key generation script automatically                #
-#       Supported: CentOS/RedHat 6+ Debian 7+ Ubuntu 12+ and macOs    #
-#       For more information please visit                             #
+#   Lock the current account password, only allow login with SSH Key  #
+#      Supported: CentOS/RedHat 6+ Debian 7+ Ubuntu 12+ and macOs     #
+#        For more information please visit                            #
 #           https://github.com/persiliao/vivian                       #
 #######################################################################
 ${SLF}"
@@ -61,15 +61,30 @@ else
 fi
 read -e -p "Whether i need to set up ~/.ssh/authorized_keys not allowed to be modified ? [y/n] :" sshChattrSet
 if [ "${sshChattrSet}" == 'y' ]; then
-    if [ $(id -u) == '0' ]; then
-        `$chattrAddCommand ~/.ssh/authorized_keys`
+    if [ $isRootLogin == 0 ]; then
+        $chattrAddCommand ~/.ssh/authorized_keys
     else
-        `sudo $chattrAddCommand ~/.ssh/authorized_keys`
+        sudo $chattrAddCommand ~/.ssh/authorized_keys
     fi
     if [ $? == 0 ]; then
         echo -e "${SLF}${CSUCCESS}The setting of the .ssh/authorized_keys does not allow the modification of the successful. ${CEND}${SLF}"
     else
         echo -e "${SLF}${CFAILURE}The setting of the .ssh/authorized_keys does not allow the modification of the  unsuccessful !${CEND}${SLF}"
+        exit 1
+    fi
+fi
+
+read -e -p "Do you need to lock the current user's (${USER}) password, forbid password login ? [y/n] :" banPasswdLogin
+if [ "${banPasswdLogin}" == 'y' ]; then
+    if [ $(id -u) == '0' ]; then
+        passwd -l $USER
+    else
+        sudo passwd -l $USER
+    fi
+    if [ $? == 0 ]; then
+        echo -e "${SLF}${CSUCCESS}Lock user successfully, only allow user to log in using SSH Key. ${CEND}${SLF}"
+    else
+        echo -e "${SLF}${CFAILURE}Failed to lock user !${CEND}${SLF}"
         exit 1
     fi
 fi
