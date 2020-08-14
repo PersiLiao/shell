@@ -18,3 +18,12 @@ checkUsernameExist() {
 checkUserGroupExist() {
     return $(cat /etc/group | awk -F: '{print $1}'|grep -E "^$1\$"|wc -l)
 }
+
+isDarwin(){
+    if [ `uname` == "Darwin" ]; then
+        return 1
+    fi    
+    return 0
+}
+
+

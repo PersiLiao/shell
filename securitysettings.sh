@@ -1,10 +1,9 @@
 #!/bin/bash
 
 #Author: PersiLiao(xiangchu.liao@gmail.com)
-#Description: SSH public key generation script automatically
+#Home: https://www.sixsir.com
+#Description: Linux Security Setting
 #Version: 1.0
-#ssh-keygen -t rsa
-#yum install -y openssh-server openssh-clients
 
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 
@@ -34,30 +33,29 @@ else
 fi
 
 printf "
-#######################################################################
-#   Lock the current account password, only allow login with SSH Key  #
-#      Supported: CentOS/RedHat 6+ Debian 7+ Ubuntu 12+ and macOs     #
-#        For more information please visit                            #
-#           https://github.com/persiliao/vivian                       #
-#######################################################################
+###############################################################################
+#    Linux Security Setting Supported: CentOS/RedHat 6+ Debian 7+ Ubuntu 12   #
+#        For more information please visit                                    #
+#           https://github.com/persiliao/vivian                               #
+###############################################################################
 ${SLF}"
 test -d ~/.ssh || mkdir ~/.ssh
 chmod 0700 ~/.ssh
 test -f ~/.ssh/authorized_keys || touch ~/.ssh/authorized_keys
 `$chattrDelCommand ~/.ssh/authorized_keys`
 chmod 0600 ~/.ssh/authorized_keys
-publicKeyPath="${workDirectory}/public.key"
+publicKeyPath="${workDirectory}/config/RSApublic.pub"
 if [ ! -f $publicKeyPath ]; then
-    echo -e "${CFAILURE}Please check that the public.key file exists in the directory !${CEND}${SLF}"
+    echo -e "${CFAILURE}Please check that the config/RSApublic.pub file exists in the directory !${CEND}${SLF}"
     exit 1
 fi
 cat $publicKeyPath > ~/.ssh/authorized_keys
 writePublicKeyStatus=$?
 if [ $writePublicKeyStatus != 0 ]; then
-    echo -e "${CFAILURE}SSH public key auto write authorized_keys unsuccessful !${CEND}${SLF}"
+    echo -e "${CFAILURE}SSH RSA public key auto write authorized_keys unsuccessful !${CEND}${SLF}"
     exit 1
 else
-    echo -e "${CSUCCESS}SSH public key auto write authorized_keys successful. ${CEND}${SLF}"
+    echo -e "${CSUCCESS}SSH RSA public key auto write authorized_keys successful. ${CEND}${SLF}"
 fi
 read -e -p "Whether i need to set up ~/.ssh/authorized_keys not allowed to be modified ? [y/n] :" sshChattrSet
 if [ "${sshChattrSet}" == 'y' ]; then

@@ -1,0 +1,4 @@
+# Created by .ignore support plugin (hsz.mobi)
+.phpintel/
+/git/webhooks/vendor/
+/git/webhooks/composer.lock
