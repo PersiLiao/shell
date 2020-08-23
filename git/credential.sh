@@ -1,4 +1,4 @@
-#!/usr/sh
+#!/bin/sh
 
 #Author: PersiLiao(xiangchu.liao@gmail.com)
 #Home: https://www.sixsir.com
