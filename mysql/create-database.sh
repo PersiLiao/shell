@@ -7,6 +7,7 @@
 export PATH=/usr/local/mysql/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 
 workDirectory=$(dirname "$0")
+# shellcheck disable=SC2164
 pushd ${workDirectory} > /dev/null
 workDirectory=$(pwd)
 
