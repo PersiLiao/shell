@@ -44,9 +44,9 @@ chmod 0700 ~/.ssh
 test -f ~/.ssh/authorized_keys || touch ~/.ssh/authorized_keys
 `$chattrDelCommand ~/.ssh/authorized_keys`
 chmod 0600 ~/.ssh/authorized_keys
-publicKeyPath="${workDirectory}/config/Login_rsa.pub"
+publicKeyPath="${workDirectory}/config/Temporary_rsa.pub"
 if [ ! -f $publicKeyPath ]; then
-    echo -e "${CFAILURE}Please check that the config/RSApublic.pub file exists in the directory !${CEND}${SLF}"
+    echo -e "${CFAILURE}Please check that the config/Temporary_rsa.pub file exists in the directory !${CEND}${SLF}"
     exit 1
 fi
 cat $publicKeyPath > ~/.ssh/authorized_keys
