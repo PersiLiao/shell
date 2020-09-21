@@ -60,8 +60,10 @@ fi
 read -e -p "Whether i need to set up ~/.ssh/authorized_keys not allowed to be modified ? [y/n] :" sshChattrSet
 if [ "${sshChattrSet}" == 'y' ]; then
     if [ $isRootLogin == 0 ]; then
+        $chattrAddCommand ~/.ssh
         $chattrAddCommand ~/.ssh/authorized_keys
     else
+        sudo $chattrAddCommand ~/.ssh
         sudo $chattrAddCommand ~/.ssh/authorized_keys
     fi
     if [ $? == 0 ]; then
