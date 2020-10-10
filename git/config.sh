@@ -5,13 +5,13 @@
 #Description: Git
 #Version: 1.0
 
-git config --system pull.ff only
-git config --system push.default simple
-git config --system pull.rebase true
-git config --system core.fileMode false
+git config --global pull.ff only
+git config --global push.default simple
+git config --global pull.rebase true
+git config --global core.fileMode false
 
 if [ `uname` == "Darwin" ]; then
-    git config --system credential.helper osxkeychain
+    git config --global credential.helper osxkeychain
 else
-    git config --system credential.helper store
+    git config --global credential.helper store
 fi
