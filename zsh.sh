@@ -1,4 +1,6 @@
 #!/bin/sh
+
+sudo yum install -y zsh
 #
 # This script should be run via curl:
 #   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
