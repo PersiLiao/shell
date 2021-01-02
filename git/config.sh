@@ -5,6 +5,7 @@
 #Description: Git
 #Version: 1.0
 
+git config --global init.defaultBranch master
 git config --global pull.ff only
 git config --global push.default simple
 git config --global pull.rebase true
