@@ -12,7 +12,6 @@ git config --global pull.rebase true
 git config --global core.fileMode false
 git config --global http.postBuffer 524288000
 git config --global https.postBuffer 524288000
-git config --global http.sslBackend "openssl"
 
 if [ `uname` == "Darwin" ]; then
     git config --global credential.helper osxkeychain
