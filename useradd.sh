@@ -4,7 +4,7 @@
 #Description: Make you more friendly to create user accounts
 #Version: 1.0
 
-export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 workDirectory=$(dirname "$0")
 pushd ${workDirectory} > /dev/null
@@ -26,7 +26,7 @@ ${SLF}"
 [ $(uname) != "Linux" ] && { echo "${CFAILURE}Error: Only support for running under Linux systems !${CEND}"; exit 1; }
 
 if [ $(id -u) != 0 ]; then
-    printf "${CFAILURE}Error: You must be root to run this script${CEND}${SLF}"; 
+    printf "${CFAILURE}Error: You must be root to run this script${CEND}${SLF}";
     exit 1;
 fi
 

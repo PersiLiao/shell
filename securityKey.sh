@@ -5,7 +5,7 @@
 #Description: Linux Security Setting
 #Version: 1.0
 
-export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 workDirectory=$(dirname "$0")
 pushd ${workDirectory} > /dev/null

@@ -5,6 +5,8 @@
 #Description: Git
 #Version: 1.0
 
+git config --global user.name "Persi.Liao"
+git config --global user.email "xiangchu.liao@gmail.com"
 git config --global init.defaultBranch master
 git config --global pull.ff only
 git config --global push.default simple
