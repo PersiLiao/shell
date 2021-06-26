@@ -1,9 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-#Author: PersiLiao(xiangchu.liao@gmail.com)
-#Home: https://www.sixsir.com
-#Description: Git
-#Version: 1.0
+#Author: Persi.Liao(xiangchu.liao@gmail.com)
 
 git config --global user.name "Persi.Liao"
 git config --global user.email "xiangchu.liao@gmail.com"
